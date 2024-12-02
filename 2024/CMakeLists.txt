@@ -22,7 +22,7 @@ add_custom_command(
         ${PROJECT_BINARY_DIR}/Data
 )
 
-target_link_libraries(AdventOfCode_2024 ${GTEST_LIBRARIES})
+
 target_link_libraries(AdventOfCode_2024  pthread)
 target_link_libraries(AdventOfCode_2024  AdventOfCodeLib)
 target_link_libraries(AdventOfCode_2024  fort)

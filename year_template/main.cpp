@@ -5,14 +5,7 @@
 #include <memory>
 #include <vector>
 #include "fort.h"
-#include "Day01.h"
-#include "Day02.h"
 //DayHeader
-
-
-class Day01;
-
-class Day02;
 
 struct DayInfo {
     std::unique_ptr<DayBase> day;
@@ -29,8 +22,6 @@ struct DayInfo {
 
 std::vector<DayInfo> createDays() {
     std::vector<DayInfo> days;
-    days.push_back({std::make_unique<Day01>(), "01"});
-    days.push_back({std::make_unique<Day02>(), "02"});
     //dayCreator
     return days;
 }
