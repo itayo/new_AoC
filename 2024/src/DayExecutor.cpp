@@ -30,11 +30,11 @@ DayResult DayExecutor::executePart2() {
 }
 
 bool DayExecutor::executeTestPart1() {
-    // Only run the test and return the result, no timing needed
+    // Only run the test and return the result, no timing paper_needed
     return m_day->testPart1();
 }
 
 bool DayExecutor::executeTestPart2() {
-    // Only run the test and return the result, no timing needed
+    // Only run the test and return the result, no timing paper_needed
     return m_day->testPart2();
 }

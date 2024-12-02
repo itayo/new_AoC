@@ -1,17 +1,18 @@
-#ifndef DAY01_H
-#define DAY01_H
+#ifndef DAYXX_H
+#define DAYXX_H
 
 #include "DayBase.h"
 #include <string>
-#include <AoC/aoc.h>
+#include "AoC/aoc.h"
 
-class Day01 : public DayBase {
+
+class DayXX : public DayBase {
 public:
-    Day01() {
-        m_rawDataA = aoc.ReadFile("Data/input01A.txt");
-        m_rawDataB = aoc.ReadFile("Data/input01B.txt");
-        m_rawDataTestA = aoc.ReadFile("TestData/Input01A.txt");
-        m_rawDataTestB = aoc.ReadFile("TestData/input01B.txt");
+    DayXX() {
+        m_rawDataA = aoc.ReadFile("Data/inputXXA.txt");
+        m_rawDataB = aoc.ReadFile("Data/inputXXB.txt");
+        m_rawDataTestA = aoc.ReadFile("TestData/InputXXA.txt");
+        m_rawDataTestB = aoc.ReadFile("TestData/inputXXB.txt");
     }
 
     void PrepareData() {
@@ -40,4 +41,5 @@ private:
     void PrepareData(std::vector<std::string> &vector1, std::vector<std::string> &vector2);
 };
 
-#endif // DAY01_H
+
+#endif // DAYXX_H
