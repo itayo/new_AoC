@@ -7,6 +7,7 @@
 #include "fort.h"
 #include "Day01.h"
 #include "Day02.h"
+#include "Day03.h"
 //DayHeader
 
 struct DayInfo {
@@ -26,8 +27,26 @@ std::vector<DayInfo> createDays() {
     std::vector<DayInfo> days;
     days.push_back({std::make_unique<Day01>(), "01"});
     days.push_back({std::make_unique<Day02>(), "02"});
+    days.push_back({std::make_unique<Day03>(), "03"});
     //dayCreator
     return days;
+}
+
+
+DayInfo &findDayByName(std::vector<DayInfo> &days, const std::string name) {
+    std::string finalName = name;
+    if (name.length() == 1 && std::isdigit(name[0])) {
+        finalName = "0" + name;  // Add a leading zero if it's a single-digit number
+    }
+    auto it = std::find_if(days.begin(), days.end(), [&finalName](const DayInfo &day) {
+        return day.Name == finalName;
+    });
+
+    if (it != days.end()) {
+        return *it;
+    } else {
+        throw std::runtime_error("Day with the given name not found.");
+    }
 }
 
 
@@ -40,10 +59,11 @@ void printTable(std::vector<DayInfo> &resultInfos) {
     ft_write_ln(table, "", "Self-test", "", "Part A", "", "Part B");
     ft_write_ln(table, "Day", "A", "B", "Time (uS)", "Code", "Time (uS)", "Code");
     for (auto &day: resultInfos) {
-
-        ft_write_ln(table, day.Name.c_str(), day.TestAPass ? "Pass" : "Fail", day.TestBPass ? "Pass" : "Fail",
-                    std::to_string(day.executionTimeA).c_str(), day.codeA.c_str(),
-                    std::to_string(day.executionTimeB).c_str(), day.codeB.c_str());
+        if (day.hasRun) {
+            ft_write_ln(table, day.Name.c_str(), day.TestAPass ? "Pass" : "Fail", day.TestBPass ? "Pass" : "Fail",
+                        std::to_string(day.executionTimeA).c_str(), day.codeA.c_str(),
+                        std::to_string(day.executionTimeB).c_str(), day.codeB.c_str());
+        }
     }
 
 
@@ -66,13 +86,11 @@ int main(int argc, char *argv[]) {
             day.hasRun = true;
             DayExecutor executor(std::move(day.day));
 
-            // Execute and print test results for Part 1
+
             day.TestAPass = executor.executeTestPart1();
             day.TestBPass = executor.executeTestPart2();
 
 
-
-            // Execute and display results for Part 1 and Part 2
             DayResult part1Result = executor.executePart1();
             day.executionTimeA = part1Result.part1ExecutionTime.count();
             day.codeA = part1Result.part1Result;
@@ -84,24 +102,15 @@ int main(int argc, char *argv[]) {
         }
     } else {
         // Run a specific dayId if an argument is given
-        int dayId = std::stoi(argv[1]) - 1; // Convert to 0-based index
-
-        if (dayId < 0 || dayId >= days.size()) {
-            std::cerr << "Day " << (dayId + 1) << " not implemented or invalid" << std::endl;
-            return 1;
-        }
-        auto &day = days[dayId];
+        auto &day = findDayByName(days, argv[2]);
         day.hasRun = true;
 
-        std::cout << "Running Day " << (dayId + 1) << "..." << std::endl;
-        DayExecutor executor(std::move(days[dayId].day));
-        // Execute and print test results for Part 1
+        std::cout << "Running Day " << (argv[2]) << "..." << std::endl;
+        DayExecutor executor(std::move(day.day));
+
         day.TestAPass = executor.executeTestPart1();
-        day.TestAPass = executor.executeTestPart2();
+        day.TestBPass = executor.executeTestPart2();
 
-
-
-        // Execute and display results for Part 1 and Part 2
         DayResult part1Result = executor.executePart1();
         day.executionTimeA = part1Result.part1ExecutionTime.count();
         day.codeA = part1Result.part1Result;
