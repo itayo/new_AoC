@@ -26,11 +26,13 @@ public:
     bool testPart2() override;
 
 private:
-    struct Data {
 
-    };
-    static class Internal {
+    class Internal {
+    public:
+        void none(){};
         //defineDayFunctions
+    };
+    struct Data {
 
     };
     const uint32_t ExpectedTestA = ;

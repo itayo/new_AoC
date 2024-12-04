@@ -15,20 +15,21 @@ namespace AoC {
         };
 
         Vector2D() : m_x(0), m_y(0) {}
-        Vector2D(int64_t p_x, int64_t p_y) : m_x(p_x), m_y(p_y) {
+
+        explicit Vector2D(int64_t p_x, int64_t p_y) : m_x(p_x), m_y(p_y) {
         }
 
         Vector2D(int64_t p_x, int64_t p_y, tFacing p_facing) : m_x(p_x), m_y(p_y), m_facing(p_facing) {
         }
 
         bool operator==(const Vector2D &lhs) const {
-            return m_x== lhs.m_x && m_y == lhs.m_y;
+            return m_x == lhs.m_x && m_y == lhs.m_y;
         }
 
-        Vector2D operator%(const Vector2D& b){
+        Vector2D operator%(const Vector2D &b) {
             int64_t x = (m_x % b.m_x + b.m_x) % b.m_x;
             int64_t y = (m_y % b.m_y + b.m_y) % b.m_y;
-            return Vector2D(x,y);
+            return Vector2D(x, y);
         }
 
 
@@ -63,27 +64,27 @@ namespace AoC {
         }
 
         void Override(int64_t x, int64_t y) {
-            m_x=x;
-            m_y=y;
+            m_x = x;
+            m_y = y;
         }
 
         void Override(int64_t x, int64_t y, tFacing facing) {
-            m_x=x;
-            m_y=y;
-            m_facing=facing;
+            m_x = x;
+            m_y = y;
+            m_facing = facing;
         }
 
         void Override(tFacing facing) {
-            m_facing=facing;
+            m_facing = facing;
         }
 
         void X(int64_t p_x) { m_x = p_x; }
 
-        int64_t X() { return m_x; }
+        int64_t X() const { return m_x; }
 
         void Y(int64_t p_y) { m_y = p_y; }
 
-        int64_t Y() { return m_y; }
+        int64_t Y() const { return m_y; }
 
         void TurnLeft() { m_facing = static_cast<tFacing>((m_facing + 3) % (WEST + 1)); }
 
@@ -137,7 +138,16 @@ namespace AoC {
     protected:
         int64_t m_x = 0;
     };
+
+        struct Vector2DHash {
+            std::size_t operator()(const Vector2D &v) const noexcept {
+                std::size_t h1 = std::hash<int64_t>{}(v.X());
+                std::size_t h2 = std::hash<int64_t>{}(v.Y());
+                return h1 ^ (h2 << 1); // XOR and shift
+            }
+        };
 }
+
 
 
 #endif //ADVENTOFCODE_GRID2D_H
