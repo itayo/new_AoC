@@ -2,9 +2,7 @@
 project(AdventOfCode_XXXX)
 SET(LIBINTERFACE_VERSION 1 CACHE STRING "XXXX")
 set(CMAKE_CXX_STANDARD 17)
-add_definitions( -DVERSION_LIBINTERFACE=${LIBINTERFACE_VERSION} )
 include_directories(include)
-
 # Add source files
 add_executable(AdventOfCode_XXXX main.cpp src/DayBase.cpp src/DayExecutor.cpp )#DayInsertPlace
 

@@ -26,15 +26,17 @@ public:
     bool testPart2() override;
 
 private:
+
+    class Internal {
+    public:
+        void none(){};
+        //defineDayFunctions
+    };
     struct Data {
 
     };
-    static class Internal {
-        //defineDayFunctions
-
-    };
-    const uint32_t ExpectedTestA = ;
-    const uint32_t ExpectedTestB = ;
+    const uint64_t ExpectedTestA = ;
+    const uint64_t ExpectedTestB = ;
 
     AoC::AoC aoc;
     std::vector<std::string> m_rawDataA;
@@ -48,16 +50,16 @@ private:
 
     void PrepareData() {
         PrepareData(m_rawDataA, m_DataA);
-        PrepareData(m_rawDataA, m_DataB);
+        PrepareData(m_rawDataB, m_DataB);
         PrepareData(m_rawDataTestA, m_DataTestA);
         PrepareData(m_rawDataTestB, m_DataTestB);
     }
 
     void PrepareData(std::vector<std::string> &raw, Data &formatted);
 
-    uint32_t Execute1(Data data);
+    uint64_t Execute1(Data data);
 
-    uint32_t Execute2(Data data);
+    uint64_t Execute2(Data data);
 };
 
 

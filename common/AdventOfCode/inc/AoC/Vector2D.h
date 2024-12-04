@@ -15,20 +15,31 @@ namespace AoC {
         };
 
         Vector2D() : m_x(0), m_y(0) {}
-        Vector2D(int64_t p_x, int64_t p_y) : m_x(p_x), m_y(p_y) {
+
+        explicit Vector2D(int64_t p_x, int64_t p_y) : m_x(p_x), m_y(p_y) {
         }
 
         Vector2D(int64_t p_x, int64_t p_y, tFacing p_facing) : m_x(p_x), m_y(p_y), m_facing(p_facing) {
         }
 
         bool operator==(const Vector2D &lhs) const {
-            return m_x== lhs.m_x && m_y == lhs.m_y;
+            return m_x == lhs.m_x && m_y == lhs.m_y && m_facing == lhs.m_facing;
         }
 
-        Vector2D operator%(const Vector2D& b){
+        bool operator!=(const Vector2D &lhs) const {
+            return m_x != lhs.m_x || m_y != lhs.m_y || m_facing != lhs.m_facing;
+        }
+
+        Vector2D operator%(const Vector2D &b) {
             int64_t x = (m_x % b.m_x + b.m_x) % b.m_x;
             int64_t y = (m_y % b.m_y + b.m_y) % b.m_y;
-            return Vector2D(x,y);
+            return Vector2D(x, y);
+        }
+        bool operator<(const Vector2D& b) const
+        {
+            if(m_x < b.m_x) return true;
+            if(m_x == b.m_x && m_y < b.m_y) return true;
+            return false;
         }
 
 
@@ -41,6 +52,7 @@ namespace AoC {
             this->m_y += rhs.m_y;
             return *this;
         }
+
 
         Vector2D &operator-=(const Vector2D &rhs) {
             this->m_x -= rhs.m_x;
@@ -63,27 +75,35 @@ namespace AoC {
         }
 
         void Override(int64_t x, int64_t y) {
-            m_x=x;
-            m_y=y;
+            m_x = x;
+            m_y = y;
         }
 
         void Override(int64_t x, int64_t y, tFacing facing) {
-            m_x=x;
-            m_y=y;
-            m_facing=facing;
+            m_x = x;
+            m_y = y;
+            m_facing = facing;
+        }
+
+        void Override(Vector2D o) {
+            m_x = o.X();
+            m_y = o.Y();
+            m_facing = o.IsFacing();
         }
 
         void Override(tFacing facing) {
-            m_facing=facing;
+            m_facing = facing;
         }
 
         void X(int64_t p_x) { m_x = p_x; }
 
-        int64_t X() { return m_x; }
+        int64_t X() const { return m_x; }
 
         void Y(int64_t p_y) { m_y = p_y; }
 
-        int64_t Y() { return m_y; }
+        int64_t Y() const { return m_y; }
+
+        void SetFacing(tFacing facing) { m_facing=facing; }
 
         void TurnLeft() { m_facing = static_cast<tFacing>((m_facing + 3) % (WEST + 1)); }
 
@@ -100,16 +120,38 @@ namespace AoC {
                 case WEST:
                     return GoWest();
             }
-
         }
 
-        void GoNorth() { m_y--; }
+        char FacingSymbol() {
+            switch (m_facing) {
+                case NORTH:
+                    return '^';
+                case EAST:
+                    return '>';
+                case SOUTH:
+                    return 'v';
+                case WEST:
+                    return '<';
+            }
+            return NORTH;
+        }
 
-        void GoEast() { m_x++; }
+        void GoNorth() { m_x--; }
 
-        void GoSouth() { m_y++; }
+        void GoEast() { m_y++; }
 
-        void GoWest() { m_x--; }
+        void GoSouth() { m_x++; }
+
+        void GoWest() { m_y--; }
+
+
+        const Vector2D LookAhead() {
+            Vector2D inFront(m_x, m_y, m_facing);
+            inFront.GoForward();
+            return std::move(inFront);
+
+
+        }
 
         tFacing IsFacing() { return m_facing; }
 
@@ -137,7 +179,16 @@ namespace AoC {
     protected:
         int64_t m_x = 0;
     };
+
+        struct Vector2DHash {
+            std::size_t operator()(const Vector2D &v) const noexcept {
+                std::size_t h1 = std::hash<int64_t>{}(v.X());
+                std::size_t h2 = std::hash<int64_t>{}(v.Y());
+                return h1 ^ (h2 << 1); //
+            }
+        };
 }
+
 
 
 #endif //ADVENTOFCODE_GRID2D_H
