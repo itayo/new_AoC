@@ -8,6 +8,8 @@
 #include "fort.h"
 #include "Day01.h"
 #include "Day02.h"
+#include "Day03.h"
+#include "Day04.h"
 //DayHeader
 
 struct DayInfo {
@@ -27,6 +29,8 @@ std::vector<DayInfo> createDays() {
     std::vector<DayInfo> days;
     days.push_back({std::make_unique<Day01>(), "01"});
     days.push_back({std::make_unique<Day02>(), "02"});
+    days.push_back({std::make_unique<Day03>(), "03"});
+    days.push_back({std::make_unique<Day04>(), "04"});
     //dayCreator
     return days;
 }
