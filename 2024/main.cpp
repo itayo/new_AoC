@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <algorithm>
 #include "fort.h"
 #include "Day01.h"
 #include "Day02.h"
@@ -17,9 +18,9 @@ struct DayInfo {
     bool hasRun = false;
     bool TestAPass = false;
     bool TestBPass = false;
-    uint64_t executionTimeA;
+    double executionTimeA;
     std::string codeA;
-    uint64_t executionTimeB;
+    double executionTimeB;
     std::string codeB;
 
 };
@@ -55,9 +56,12 @@ DayInfo &findDayByName(std::vector<DayInfo> &days, const std::string name) {
 void printTable(std::vector<DayInfo> &resultInfos) {
     ft_table_t *table = ft_create_table();
     ft_set_border_style(table, FT_DOUBLE2_STYLE);
+    size_t row = 0;
 
     ft_set_cell_prop(table, 0, FT_ANY_COLUMN, FT_CPROP_ROW_TYPE, FT_ROW_HEADER);
+    ++row;
     ft_set_cell_prop(table, 1, FT_ANY_COLUMN, FT_CPROP_ROW_TYPE, FT_ROW_HEADER);
+    ++row;
     ft_write_ln(table, "", "Self-test", "", "Part A", "", "Part B");
     ft_write_ln(table, "Day", "A", "B", "Time (uS)", "Code", "Time (uS)", "Code");
     for (auto &day: resultInfos) {
@@ -65,9 +69,12 @@ void printTable(std::vector<DayInfo> &resultInfos) {
             ft_write_ln(table, day.Name.c_str(), day.TestAPass ? "Pass" : "Fail", day.TestBPass ? "Pass" : "Fail",
                         std::to_string(day.executionTimeA).c_str(), day.codeA.c_str(),
                         std::to_string(day.executionTimeB).c_str(), day.codeB.c_str());
+            ft_set_cell_prop(table, row, 1, FT_CPROP_CONT_FG_COLOR, day.TestAPass ? FT_COLOR_GREEN : FT_COLOR_RED);
+            ft_set_cell_prop(table, row, 2, FT_CPROP_CONT_FG_COLOR, day.TestBPass ? FT_COLOR_GREEN : FT_COLOR_RED);
+            ++row;
+
         }
     }
-
 
     /* Set cell span */
     ft_set_cell_span(table, 0, 1, 2);
@@ -83,15 +90,12 @@ int main(int argc, char *argv[]) {
     if (argc < 2) {
 
 
-        for (size_t i = 0; i < days.size(); ++i) {
-            auto &day = days[i];
+        for (auto &day: days) {
             day.hasRun = true;
             DayExecutor executor(std::move(day.day));
 
-
             day.TestAPass = executor.executeTestPart1();
             day.TestBPass = executor.executeTestPart2();
-
 
             DayResult part1Result = executor.executePart1();
             day.executionTimeA = part1Result.part1ExecutionTime.count();

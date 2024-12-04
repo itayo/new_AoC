@@ -3,8 +3,6 @@ project(AdventOfCode_2015)
 SET(AOC_YEARINFO "2015" CACHE STRING "YEAR VALUE")
 set(CMAKE_CXX_STANDARD 17)
 add_definitions( -DAOC_YEARINFO=${AOC_YEARINFO} )
-set(CMAKE_CXX_STANDARD 17)
-
 include_directories(include)
 
 # Add source files

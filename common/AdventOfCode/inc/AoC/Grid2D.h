@@ -16,7 +16,7 @@ namespace AoC {
 
         };
 
-        Grid2D(int p_rows, int p_cols, tType initValue) :
+        Grid2D(int p_rows, int p_cols, const tType &initValue) :
                 m_rows(p_rows), m_columns(p_cols), m_cells(p_rows * p_cols, initValue) {
 
         };
@@ -28,10 +28,10 @@ namespace AoC {
         int Rows() { return m_rows; }
 
         bool Exists(int p_row, int p_column) {
-            return p_row >= 0 && p_column >= 0 && p_row < m_rows;
+            return p_row >= 0 && p_column >= 0 && p_row < m_rows && p_column < m_columns;
         }
 
-        bool Exists(Vector2D p_position) { return Exists(p_position.Y(), p_position.X()); }
+        bool Exists(Vector2D p_position) { return Exists(p_position.X(), p_position.Y()); }
 
         tType Get(int p_row, int p_column) {
             if (Exists(p_row, p_column)) {
@@ -48,7 +48,7 @@ namespace AoC {
             return true;
         }
 
-        tType Get(Vector2D p_position) { return Get(p_position.Y(), p_position.X()); }
+        tType Get(Vector2D p_position) { return Get(p_position.X(), p_position.Y()); }
 
         tType operator[](Vector2D v) const {
             return Get(v.Y(), v.X());
@@ -67,7 +67,7 @@ namespace AoC {
         }
 
         std::string GetRowAsString(int row) {
-            std::string result = "";
+            std::string result;
             for (int i = 0; i < m_rows; ++i) {
                 result += Get(row, i);
             }
@@ -86,16 +86,20 @@ namespace AoC {
         }
 
         void Reset(int p_row, int p_columns) {
+            Reset(p_row, p_columns, tType());
+        }
+
+        void Reset(int p_row, int p_columns, tType t) {
             m_cells.clear();
             m_rows = p_row;
             m_columns = p_columns;
-            for (int i = 0; i < m_rows * m_columns; ++i) {
-                m_cells.push_back(tType());
-            }
+            m_cells.insert(m_cells.begin(), m_rows * m_columns, t);
+
         }
 
         Vector2D IndexToLocation(int index) {
-            return {index % m_columns, index / m_columns};
+            Vector2D ret{index / m_columns, index % m_columns};
+            return ret;
         }
 
         int Vector2DToLocation(Vector2D vector) {
@@ -148,6 +152,19 @@ namespace AoC {
                 }
                 std::cout << std::endl;
             }
+
+        }
+
+        void PrintWithOverlay(Vector2D overlayPos) {
+            char tmp= Get(overlayPos);
+            Set(overlayPos.X(),overlayPos.Y(),overlayPos.FacingSymbol());
+            for (int row = 0; row < m_rows; ++row) {
+                for (int cols = 0; cols < m_columns; ++cols) {
+                    std::cout << Get(row, cols);
+                }
+                std::cout << std::endl;
+            }
+            Set(overlayPos.X(),overlayPos.Y(),tmp);
 
         }
 

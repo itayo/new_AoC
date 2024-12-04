@@ -13,7 +13,6 @@ DayResult DayExecutor::executePart1() {
     return DayResult{
             .part1ExecutionTime = executionTime,
             .part1Result = result,
-            .testPart1Result = m_day->testPart1()
     };
 }
 
@@ -27,7 +26,6 @@ DayResult DayExecutor::executePart2() {
     return DayResult{
             .part2ExecutionTime = executionTime,
             .part2Result = result,
-            .testPart2Result = m_day->testPart2()
     };
 }
 
