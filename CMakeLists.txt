@@ -10,6 +10,7 @@ FetchContent_Declare(libfort
 )
 
 FetchContent_MakeAvailable(libfort)
+find_package(OpenSSL REQUIRED)
 
 add_subdirectory(common)
 add_subdirectory(year_template)
