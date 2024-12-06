@@ -27,7 +27,7 @@ namespace AoC {
         }
 
         bool operator!=(const Vector2D &lhs) const {
-            return m_x != lhs.m_x || m_y != lhs.m_y || m_facing != lhs.m_facing;
+            return !this->operator==(lhs);
         }
 
         Vector2D operator%(const Vector2D &b) {
