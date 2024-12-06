@@ -16,16 +16,23 @@ namespace AoC {
 
         };
 
-        Grid2D(int p_rows, int p_cols, tType initValue) :
+        Grid2D(int p_rows, int p_cols, tType &initValue) :
                 m_rows(p_rows), m_columns(p_cols), m_cells(p_rows * p_cols, initValue) {
 
         };
 
+        Grid2D(int p_rows, int p_cols, std::vector<tType> &data) : m_rows(p_rows), m_columns(p_cols),
+                                                                   m_cells(p_rows, p_cols) {
+            m_cells.clear();
+            m_cells.resize(p_rows * p_cols);
+            std::copy(data.begin(), data.end(), std::back_inserter(m_cells));
+        }
+
         Grid2D() : Grid2D(0, 0) {}
 
-        int Columns() { return m_columns; }
+        int Columns() const { return m_columns; };
 
-        int Rows() { return m_rows; }
+        int Rows() const { return m_rows; };
 
         bool Exists(int p_row, int p_column) {
             return p_row >= 0 && p_column >= 0 && p_row < m_rows;
@@ -41,9 +48,8 @@ namespace AoC {
         }
 
         bool AllExists(const std::vector<Vector2D> &Locations) {
-            for (const Vector2D &location: Locations)
-            {
-                if(!Exists(location)) return false;
+            for (const Vector2D &location: Locations) {
+                if (!Exists(location)) return false;
             }
             return true;
         }
@@ -95,7 +101,7 @@ namespace AoC {
         }
 
         Vector2D IndexToLocation(int index) {
-            Vector2D ret{index % m_columns,index / m_columns};
+            Vector2D ret{index % m_columns, index / m_columns};
             return ret;
         }
 
@@ -108,6 +114,8 @@ namespace AoC {
                 m_cells[(m_columns * p_row) + p_column] = p_value;
             }
         }
+
+        void Set(Vector2D pos, tType p_value) { Set(pos.X(), pos.Y(), p_value); }
 
         void SetAll(tType value) {
             for (auto &cell: m_cells) {
@@ -153,15 +161,15 @@ namespace AoC {
         }
 
         void PrintWithOverlay(Vector2D overlayPos) {
-            char tmp= Get(overlayPos);
-            Set(overlayPos.X(),overlayPos.Y(),overlayPos.FacingSymbol());
+            char tmp = Get(overlayPos);
+            Set(overlayPos.X(), overlayPos.Y(), overlayPos.FacingSymbol());
             for (int row = 0; row < m_rows; ++row) {
                 for (int cols = 0; cols < m_columns; ++cols) {
                     std::cout << Get(row, cols);
                 }
                 std::cout << std::endl;
             }
-            Set(overlayPos.X(),overlayPos.Y(),tmp);
+            Set(overlayPos.X(), overlayPos.Y(), tmp);
 
         }
 
@@ -183,6 +191,10 @@ namespace AoC {
                 it++;
             }
             return locations;
+        }
+
+        const std::vector<tType> *GetRawData() const {
+            return *&m_cells;
         }
 
     private:
