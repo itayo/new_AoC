@@ -6,7 +6,7 @@ add_definitions( -DAOC_YEARINFO=${AOC_YEARINFO} )
 include_directories(include)
 
 # Add source files
-add_executable(AdventOfCode_2015 main.cpp src/DayBase.cpp src/DayExecutor.cpp  src/Day01.cpp src/Day02.cpp src/Day03.cpp src/Day04.cpp src/Day04.cpp src/Day05.cpp )#DayInsertPlace
+add_executable(AdventOfCode_2015 main.cpp src/DayBase.cpp src/DayExecutor.cpp  src/Day01.cpp src/Day02.cpp src/Day03.cpp src/Day04.cpp src/Day04.cpp src/Day05.cpp src/Day06.cpp )#DayInsertPlace
 
 add_custom_command(
         TARGET AdventOfCode_2015 POST_BUILD

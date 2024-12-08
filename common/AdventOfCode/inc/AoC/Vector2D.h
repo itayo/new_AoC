@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <string>
+#include <iostream>
+#include <algorithm>
 
 namespace AoC {
     class Vector2D {
