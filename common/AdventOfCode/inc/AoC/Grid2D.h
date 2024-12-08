@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <algorithm>
 #include "Vector2D.h"
 #include "Assertion.h"
 
