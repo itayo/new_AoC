@@ -19,6 +19,7 @@
 #include "Day11.h"
 #include "Day12.h"
 #include "Day13.h"
+#include "Day14.h"
 //DayHeader
 
 struct DayInfo {
@@ -49,6 +50,7 @@ std::vector<DayInfo> createDays() {
     days.push_back({std::make_unique<Day11>(), "11"});
     days.push_back({std::make_unique<Day12>(), "12"});
     days.push_back({std::make_unique<Day13>(), "13"});
+    days.push_back({std::make_unique<Day14>(), "14"});
     //dayCreator
     return days;
 }
