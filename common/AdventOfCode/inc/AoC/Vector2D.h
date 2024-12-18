@@ -24,12 +24,12 @@ namespace AoC {
         Vector2D(int64_t p_x, int64_t p_y, tFacing p_facing) : m_x(p_x), m_y(p_y), m_facing(p_facing) {
         }
 
-        bool operator==(const Vector2D &lhs) const {
-            return m_x == lhs.m_x && m_y == lhs.m_y && m_facing == lhs.m_facing;
+        bool operator==(const Vector2D &rhs) const {
+            return m_x == rhs.m_x && m_y == rhs.m_y && m_facing == rhs.m_facing;
         }
 
-        bool operator!=(const Vector2D &lhs) const {
-            return !this->operator==(lhs);
+        bool operator!=(const Vector2D &rhs) const {
+            return !this->operator==(rhs);
         }
 
         Vector2D operator%(const Vector2D &b) {
@@ -37,16 +37,16 @@ namespace AoC {
             int64_t y = (m_y % b.m_y + b.m_y) % b.m_y;
             return Vector2D(x, y);
         }
-        bool operator<(const Vector2D& b) const
-        {
-            if(m_x < b.m_x) return true;
-            if(m_x == b.m_x && m_y < b.m_y) return true;
+
+        bool operator<(const Vector2D &b) const {
+            if (m_x < b.m_x) return true;
+            if (m_x == b.m_x && m_y < b.m_y) return true;
             return false;
         }
 
 
         Vector2D operator+(const Vector2D &v) const {
-            return Vector2D(m_x + v.m_x, m_y + v.m_y,m_facing);
+            return Vector2D(m_x + v.m_x, m_y + v.m_y, m_facing);
         }
 
         Vector2D &operator+=(const Vector2D &rhs) {
@@ -63,7 +63,7 @@ namespace AoC {
         }
 
         Vector2D operator-(const Vector2D &v) const {
-            return Vector2D(m_x - v.m_x, m_y - v.m_y,m_facing);
+            return Vector2D(m_x - v.m_x, m_y - v.m_y, m_facing);
         }
 
         Vector2D operator*(uint64_t v) const {
@@ -105,7 +105,7 @@ namespace AoC {
 
         int64_t Y() const { return m_y; }
 
-        void SetFacing(tFacing facing) { m_facing=facing; }
+        void SetFacing(tFacing facing) { m_facing = facing; }
 
         void TurnLeft() { m_facing = static_cast<tFacing>((m_facing + 3) % (WEST + 1)); }
 
@@ -182,15 +182,33 @@ namespace AoC {
         int64_t m_x = 0;
     };
 
-        struct Vector2DHash {
-            std::size_t operator()(const Vector2D &v) const noexcept {
-                std::size_t h1 = std::hash<int64_t>{}(v.X());
-                std::size_t h2 = std::hash<int64_t>{}(v.Y());
-                return h1 ^ (h2 << 1); //
-            }
-        };
-}
+    struct Vector2DPosHash {
 
+        std::size_t operator()(const Vector2D &v) const noexcept {
+            std::size_t h1 = std::hash<int64_t>{}(v.X());
+            std::size_t h2 = std::hash<int64_t>{}(v.Y());
+            return h1 ^ (h2 << 1); //
+        }
+
+    };
+
+    struct Vector2DFullHash{
+
+        template<typename T>
+        static inline void combine(std::size_t &seed, const T &v) {
+            // Combine the current seed with the hash of v using XOR and bit-shifting
+            seed ^= std::hash<T>{}(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+        }
+
+        std::size_t operator()(const Vector2D &key) const {
+            std::size_t seed = 0;
+            combine(seed, key.X());
+            combine(seed, key.Y());
+            combine(seed, key.IsFacing());
+            return seed;
+        }
+    };
+}
 
 
 #endif //ADVENTOFCODE_GRID2D_H
