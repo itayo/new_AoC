@@ -46,7 +46,7 @@ namespace AoC {
 
 
         Vector2D operator+(const Vector2D &v) const {
-            return Vector2D(m_x + v.m_x, m_y + v.m_y);
+            return Vector2D(m_x + v.m_x, m_y + v.m_y,m_facing);
         }
 
         Vector2D &operator+=(const Vector2D &rhs) {
@@ -63,7 +63,7 @@ namespace AoC {
         }
 
         Vector2D operator-(const Vector2D &v) const {
-            return Vector2D(m_x - v.m_x, m_y - v.m_y);
+            return Vector2D(m_x - v.m_x, m_y - v.m_y,m_facing);
         }
 
         Vector2D operator*(uint64_t v) const {
@@ -155,7 +155,7 @@ namespace AoC {
 
         }
 
-        tFacing IsFacing() { return m_facing; }
+        tFacing IsFacing() const { return m_facing; }
 
         void Print() {
             std::cout << "X=" << m_x << " Y=" << m_y << " Facing=" << m_facing << std::endl;

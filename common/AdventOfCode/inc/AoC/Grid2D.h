@@ -174,7 +174,18 @@ namespace AoC {
                 std::cout << std::endl;
             }
             Set(overlayPos.X(), overlayPos.Y(), tmp);
+        }
 
+        void PrintWithOverlay(Vector2D overlayPos, tType overlay) {
+            char tmp = Get(overlayPos);
+            Set(overlayPos.X(), overlayPos.Y(), overlay);
+            for (int row = 0; row < m_rows; ++row) {
+                for (int cols = 0; cols < m_columns; ++cols) {
+                    std::cout << Get(row, cols);
+                }
+                std::cout << std::endl;
+            }
+            Set(overlayPos.X(), overlayPos.Y(), tmp);
         }
 
         Vector2D FindPos(tType p_what) {
