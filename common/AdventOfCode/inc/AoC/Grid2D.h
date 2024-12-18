@@ -234,7 +234,7 @@ namespace AoC {
             return locations;
         }
 
-        const std::vector<tType> *GetRawData() const {
+        const std::vector<char> &GetRawData() const {
             return *&m_cells;
         }
 

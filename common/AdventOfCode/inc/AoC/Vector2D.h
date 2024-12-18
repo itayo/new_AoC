@@ -174,6 +174,19 @@ namespace AoC {
             return ret;
         }
 
+        std::string CordRev(bool facing = false) const {
+            std::string ret = "(";
+            ret += std::to_string(m_y);
+            ret += ",";
+            ret += std::to_string(m_x);
+            if (facing) {
+                ret += ",";
+                ret += std::to_string(m_facing);
+            }
+            ret += ")";
+            return ret;
+        }
+
     private:
         tFacing m_facing = tFacing::NORTH;
         int64_t m_y = 0;
