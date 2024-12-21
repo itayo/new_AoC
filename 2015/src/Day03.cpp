@@ -8,7 +8,7 @@ void Day03::PrepareData(std::vector<std::string> &raw, Data &formatted) {
 uint32_t Day03::Execute1(Data data) {
     uint32_t result = 0;
     AoC::Vector2D santa;
-    std::unordered_map<AoC::Vector2D, int, AoC::Vector2DHash> locations{{santa, 1}};
+    std::unordered_map<AoC::Vector2D, int, AoC::Vector2DPosHash> locations{{santa, 1}};
 
     ChristmasMover MoveSanta = {
             {'^', [&santa]() { santa.GoNorth(); }},
@@ -33,7 +33,7 @@ uint32_t Day03::Execute1(Data data) {
 uint32_t Day03::Execute2(Data data) {
     uint32_t result = 0;
     AoC::Vector2D santa(0,0),robot(0, 0);
-    std::unordered_map<AoC::Vector2D, int, AoC::Vector2DHash> locations{{santa, 1}};
+    std::unordered_map<AoC::Vector2D, int, AoC::Vector2DPosHash> locations{{santa, 1}};
     bool moveSanta=false;
 
     ChristmasMover MoveSanta = {

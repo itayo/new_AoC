@@ -12,6 +12,10 @@ namespace AoC {
     template<class tType>
     class Grid2D {
     public:
+        struct OverlayStruct {
+            std::vector<Vector2D> pos;
+            tType val;
+        };
         Grid2D(int p_rows, int p_cols) :
                 m_rows(p_rows), m_columns(p_cols), m_cells(p_rows * p_cols) {
 
@@ -35,27 +39,27 @@ namespace AoC {
 
         int Rows() const { return m_rows; };
 
-        bool Exists(int p_row, int p_column) {
+        bool Exists(int p_row, int p_column) const {
             return p_row >= 0 && p_column >= 0 && p_row < m_rows && p_column < m_columns;
         }
 
-        bool Exists(Vector2D p_position) { return Exists(p_position.X(), p_position.Y()); }
+        bool Exists(Vector2D p_position) const { return Exists(p_position.X(), p_position.Y()); }
 
-        tType Get(int p_row, int p_column) {
+        tType Get(int p_row, int p_column) const {
             if (Exists(p_row, p_column)) {
                 return m_cells[(m_columns * p_row) + p_column];
             }
             return tType();
         }
 
-        bool AllExists(const std::vector<Vector2D> &Locations) {
+        bool AllExists(const std::vector<Vector2D> &Locations) const {
             for (const Vector2D &location: Locations) {
                 if (!Exists(location)) return false;
             }
             return true;
         }
 
-        tType Get(Vector2D p_position) { return Get(p_position.X(), p_position.Y()); }
+        tType Get(Vector2D p_position) const { return Get(p_position.X(), p_position.Y()); }
 
         tType operator[](Vector2D v) const {
             return Get(v.Y(), v.X());
@@ -186,6 +190,28 @@ namespace AoC {
                 std::cout << std::endl;
             }
             Set(overlayPos.X(), overlayPos.Y(), tmp);
+        }
+        void PrintWithOverlays(std::vector<OverlayStruct> &structs) {
+            std::unordered_map<Vector2D,tType,Vector2DPosHash> tmp;
+            for(auto &overlay:structs) {
+                for(auto pos: overlay.pos) {
+                    tmp[pos]=Get(pos);
+                    Set(pos,overlay.val);
+                }
+            }
+            Print();
+            for(auto &reset: tmp) {
+                Set(reset.first,reset.second);
+            }
+        }
+        struct OverlayStruct GetOverlayStruct() {
+            OverlayStruct x;
+            return std::move(x);
+        }
+
+        std::vector<OverlayStruct> GetOverlayVector() {
+            std::vector<OverlayStruct> x;
+            return std::move(x);
         }
 
         Vector2D FindPos(tType p_what) {

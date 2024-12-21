@@ -10,6 +10,7 @@ target_sources(${PROJECT_NAME}
         inc/AoC/Assertion.h
         inc/AoC/Grid2D.h
         inc/AoC/Vector2D.h
+        inc/AoC/GenericHasher.h
 )
 
 target_include_directories(${PROJECT_NAME}
