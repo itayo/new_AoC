@@ -11,6 +11,7 @@ target_sources(${PROJECT_NAME}
         inc/AoC/Grid2D.h
         inc/AoC/Vector2D.h
         inc/AoC/GenericHasher.h
+        inc/AoC/Position.h
 )
 
 target_include_directories(${PROJECT_NAME}

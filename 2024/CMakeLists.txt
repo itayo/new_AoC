@@ -6,7 +6,7 @@ set(FORT_ENABLE_TESTING OFF CACHE INTERNAL "")
 include_directories(include)
 
 # Add source files
-add_executable(AdventOfCode_2024 main.cpp src/DayBase.cpp src/DayExecutor.cpp src/Day01.cpp src/Day02.cpp src/Day03.cpp src/Day04.cpp src/Day05.cpp src/Day06.cpp src/Day07.cpp src/Day08.cpp src/Day09.cpp src/Day10.cpp src/Day11.cpp src/Day12.cpp src/Day13.cpp src/Day14.cpp src/Day15.cpp src/Day16.cpp src/Day17.cpp src/Day18.cpp src/Day19.cpp )#DayInsertPlace
+add_executable(AdventOfCode_2024 main.cpp src/DayBase.cpp src/DayExecutor.cpp src/Day01.cpp src/Day02.cpp src/Day03.cpp src/Day04.cpp src/Day05.cpp src/Day06.cpp src/Day07.cpp src/Day08.cpp src/Day09.cpp src/Day10.cpp src/Day11.cpp src/Day12.cpp src/Day13.cpp src/Day14.cpp src/Day15.cpp src/Day16.cpp src/Day17.cpp src/Day18.cpp src/Day19.cpp src/Day20.cpp )#DayInsertPlace
 
 add_custom_command(
         TARGET AdventOfCode_2024 POST_BUILD
