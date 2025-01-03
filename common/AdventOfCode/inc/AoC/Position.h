@@ -6,7 +6,20 @@ namespace AoC {
     struct Position {
         std::array<int32_t, 2> coords{};
 
+        std::array<int32_t, 2> ManhattanTo(const Position &right) const {
+            return {std::abs(coords[0] - right[0]), std::abs(coords[1] - right[1])};
+        }
+
         int32_t &operator[](std::size_t index) { return coords[index]; }
+
+        static const std::vector<std::pair<Position, char>> AllDirs() {
+            std::vector<std::pair<Position, char>> dirs;
+            dirs.push_back({{0, 1}, '>'});
+            dirs.push_back({{0, -1}, '<'});
+            dirs.push_back({{-1, 0}, '^'});
+            dirs.push_back({{1, 0}, 'v'});
+            return dirs;
+        };
 
         const int32_t &operator[](std::size_t index) const { return coords[index]; }
 
@@ -74,6 +87,7 @@ namespace AoC {
             std::size_t operator()(const Position &pos) const noexcept {
                 return std::hash<int32_t>{}(pos.coords[0]) ^ (std::hash<int32_t>{}(pos.coords[1]) << 1);
             }
+
             static const std::size_t getHash(const Position &pos) noexcept {
                 return std::hash<int32_t>{}(pos.coords[0]) ^ (std::hash<int32_t>{}(pos.coords[1]) << 1);
             }
