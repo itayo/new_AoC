@@ -12,6 +12,7 @@ target_sources(${PROJECT_NAME}
         inc/AoC/Vector2D.h
         inc/AoC/GenericHasher.h
         inc/AoC/Position.h
+        inc/AoC/LinkedList.h
 )
 
 target_include_directories(${PROJECT_NAME}
@@ -21,3 +22,4 @@ target_include_directories(${PROJECT_NAME}
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/inc>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/inc/aoc>
 )
+add_subdirectory(tests)

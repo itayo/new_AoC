@@ -7,7 +7,8 @@
 #include "AoC/aoc.h"
 
 namespace AoC {
-    std::vector<std::string> AoC::ReadFile(std::string file_path) {
+
+    AoCInput AoC::ReadFile(std::string file_path) {
         std::ifstream file(file_path);
         std::string line;
         std::vector<std::string> v;
@@ -17,7 +18,7 @@ namespace AoC {
         return v;
     }
 
-    std::vector<std::string> AoC::StringSplit(const std::string &line, char delimiter) {
+    AoCInput AoC::StringSplit(const std::string &line, char delimiter) {
         std::string part;
         std::vector<std::string> result;
         std::stringstream stream(line);
@@ -58,7 +59,7 @@ namespace AoC {
         return results;
     }
 
-    std::vector<std::string> AoC::ExtractMatches(std::regex rx, std::string line) {
+    AoCInput AoC::ExtractMatches(std::regex rx, std::string line) {
         std::smatch match;
         std::vector<std::string> results;
         while (regex_search(line, match, rx)) {

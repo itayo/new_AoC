@@ -5,13 +5,13 @@ void DayXX::PrepareData(std::vector<std::string> &raw, Data &formatted) {
 
 }
 
-uint64_t DayXX::Execute1(Data data) {
+uint64_t DayXX::Execute1(Data &data) {
     uint64_t result=0;
     return result;
 
 }
 
-uint64_t DayXX::Execute2(Data data) {
+uint64_t DayXX::Execute2(Data &data) {
     uint64_t result=0;
     return result;
 }

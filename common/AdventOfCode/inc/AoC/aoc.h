@@ -5,6 +5,7 @@
 #include <regex>
 #include "Assertion.h"
 namespace AoC {
+    using  AoCInput= std::vector<std::string>;
 #define UNUSED(x)  (void)((x))
     struct tStringToReplace {
         tStringToReplace() { }

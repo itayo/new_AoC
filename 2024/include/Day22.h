@@ -1,18 +1,18 @@
-#ifndef DAYXX_H
-#define DAYXX_H
+#ifndef DAY22_H
+#define DAY22_H
 
 #include "DayBase.h"
 #include <string>
 #include <AoC/aoc.h>
 
 
-class DayXX : public DayBase {
+class Day22 : public DayBase {
 public:
-    DayXX() {
-        m_rawDataA = aoc.ReadFile("Data/inputXXA.txt");
-        m_rawDataB = aoc.ReadFile("Data/inputXXB.txt");
-        m_rawDataTestA = aoc.ReadFile("TestData/inputXXA.txt");
-        m_rawDataTestB = aoc.ReadFile("TestData/inputXXB.txt");
+    Day22() {
+        m_rawDataA = aoc.ReadFile("Data/input22A.txt");
+        m_rawDataB = aoc.ReadFile("Data/input22B.txt");
+        m_rawDataTestA = aoc.ReadFile("TestData/input22A.txt");
+        m_rawDataTestB = aoc.ReadFile("TestData/input22B.txt");
         PrepareData();
     }
 
@@ -33,10 +33,12 @@ private:
         //defineDayFunctions
     };
     struct Data {
+        std::vector<uint64_t> Numbers;
+        std::vector<std::string> Raw;
 
     };
-    const uint64_t ExpectedTestA = ;
-    const uint64_t ExpectedTestB = ;
+    const uint64_t ExpectedTestA = 37327623;
+    const int32_t ExpectedTestB = 23;
 
     AoC::AoC aoc;
     std::vector<std::string> m_rawDataA;
@@ -57,10 +59,12 @@ private:
 
     void PrepareData(std::vector<std::string> &raw, Data &formatted);
 
-    uint64_t Execute1(Data &data);
+    uint64_t Execute1(Data data);
 
-    uint64_t Execute2(Data &data);
+    int32_t Execute2(Data data);
+
+    void Evolve(uint64_t &SIP);
 };
 
 
-#endif // DAYXX_H
+#endif // DAY22_H
