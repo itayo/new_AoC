@@ -23,6 +23,11 @@ namespace AoC {
 
     public:
         LinkedList() : head(nullptr), tail(nullptr), _size(0) {}
+        LinkedList(std::initializer_list<tData> init) : head(nullptr), tail(nullptr), _size(0) {
+            for (const tData& val : init) {
+                push_back(val);
+            }
+        }
 
 
         LinkedList(const LinkedList& other) : head(nullptr), tail(nullptr), _size(0) {
@@ -69,18 +74,18 @@ namespace AoC {
             ++_size;
         }
 
-        [[nodiscard]] std::string ToString(char separator = ',') const {
+        std::string ToString(char separator = ',') {
             Node<tData>* temp = head.get();
-            std::string result;
+            std::stringstream result("");
 
             while (temp != nullptr) {
-                result += std::to_string(temp->data);
+                result << temp->data;
                 if (temp->next != nullptr) {
-                    result += separator;
+                    result << separator;
                 }
                 temp = temp->next.get();
             }
-            return result;
+            return result.str();
         }
 
         void pop_front() {
